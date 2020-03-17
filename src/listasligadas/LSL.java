@@ -10,7 +10,7 @@ public class LSL {
     public LSL(){
         primero = ultimo = null;
     }
-    public boolean isEmpty(){
+    public boolean esVacio(){
         return primero == null;
     }
     public NodoSimple primerNodo(){
@@ -67,6 +67,63 @@ public class LSL {
             if(primero == null)
                 ultimo = x;
             primero = x;
+        }
+    }
+    public NodoSimple buscarDato(char d, NodoSimple y){
+        NodoSimple x;
+        x = primero;
+        y = anterior(x);
+        while(!finDeRecorrido(x) && x.retornaDato() != d){
+            y = x;
+            x = x.retornaLiga();
+        }
+        return x;
+    }
+    public void borrar(NodoSimple x, NodoSimple y){
+        if(x == null){
+            System.out.println("El dato no existe");
+        }
+        desconectar(x, y);
+    }
+    public void desconectar(NodoSimple x, NodoSimple y){
+        if(x != primero){
+            y.asignaLiga(x.retornaLiga());
+            if(x == ultimo)
+                ultimo = y;
+        }
+        else{
+            primero = primero.retornaLiga();
+            if(primero == null)
+                ultimo = null;
+        }
+    }
+    public void ordenaAscendentemente(){
+        //Método de ordenamiento por selección
+        NodoSimple p, ap, menor, amenor, q, aq;
+        p = primerNodo();
+        ap = anterior(p);
+        while(p != ultimoNodo()){
+            menor = p;
+            amenor = ap;
+            q = p.retornaLiga();
+            aq = p;
+            while(!finDeRecorrido(q)){
+                if(q.retornaDato() < menor.retornaDato()){
+                    menor = q;
+                    amenor = aq;
+                }
+                aq = q;
+                q = q.retornaLiga();
+            }  
+            if(menor == p){
+                ap = p;
+                p = p.retornaLiga();
+            }
+            else{
+                desconectar(menor, amenor);
+                conectar(menor, ap);
+                ap = menor;
+            }
         }
     }
 }
