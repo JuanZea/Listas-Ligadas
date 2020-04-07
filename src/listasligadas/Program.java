@@ -1,63 +1,51 @@
 package listasligadas;
 
+import java.util.Random;
 import java.util.Scanner;
+import listasligadas.LSL;
 
 /**
  *
  * @author JuanZea
  */
 public class Program {
+
     static Scanner entry = new Scanner(System.in);
-    public static void main(String[] args) { 
-        //Construcción de listas simplemente ligadas
-        //Seleccione "true" en forma de contrucción deseada:
-        boolean build1 = false;
-        boolean build2 = true;
-        boolean build3 = false;
-        
-        //Los datos se van añadiendo de forma ordenada
-        if(build1){
-            LSL a = new LSL();
-            boolean nuevoDato = true;
-            while(nuevoDato){
-                System.out.println("Ingrese el dato (char) a añadir o '*' para finalizar:");
-                char ans = entry.next().charAt(0);
-                if(ans != '*'){
-                    NodoSimple y = a.buscaDondeInsertar(ans);
-                    a.insertar(ans, y);
+    static Random rnd = new Random();
+
+    public static LSL construirAleatoriaLSL(int tamaño) {
+        int dato;
+        LSL lsl = new LSL();
+        NodoSimple y = null;
+        if (tamaño <= 100) {    //Contruir lista sin datos repetidos cuando el tamaño sea menor o igual a 100
+            for (int i = 0; i < tamaño; i++) {
+                dato = rnd.nextInt(101);
+                while (lsl.buscarDato(dato, y) != null) {
+                    dato = rnd.nextInt(101);
                 }
-                else
-                    nuevoDato = false;
+                lsl.insertar(dato, y);
+            }
+        } else {    //Construir lista con datos que pueden ser repetidos entre 0 y 999 si el tamaño es mayor a 100
+            for (int i = 0; i < tamaño; i++) {
+                dato = rnd.nextInt(1000);
+                lsl.insertar(dato, y);
             }
         }
-        //Los datos se van añadiendo siempre al final de la lista (en el orden en que se van leyendo)
-        if (build2) {
-            LSL a = new LSL();
-            boolean nuevoDato = true;
-            while (nuevoDato) {                
-                System.out.println("Ingrese el dato(char) a añadir o '*' para finalizar:");
-                char ans = entry.next().charAt(0);
-                if(ans != '*'){
-                    NodoSimple y = a.ultimoNodo();
-                    a.insertar(ans, y);
-                }
-                else
-                    nuevoDato = false;
-            }
-        }
-        //Los datos se van añadiendo siempre al principio de la lista
-        if (build3) {
-            LSL a = new LSL();
-            boolean nuevoDato = true;
-            while (nuevoDato) {                
-                System.out.println("Ingrese el dato(char) a añadir o '*' para finalizar:");
-                char ans = entry.next().charAt(0);
-                if(ans != '*'){
-                    a.insertar(ans, null);
-                }
-                else
-                    nuevoDato = false;
-            }
-        }
-    }  
+        return lsl;
+    }
+
+    public static void main(String[] args) {
+//        Menu menu = new Menu();
+//        Boolean aleatoria = menu.PedirManeraContruir();
+//        String tipo = menu.PedirTipoDeLista();
+//        Integer tamaño = menu.PedirTamaño(tipo);
+
+        LSL lsl = new LSL();
+        LSLC lslc = new LSLC();
+//        if (aleatoria) {
+//            lsl = construirAleatoriaLSL(tamaño);
+//        }
+        lsl = construirAleatoriaLSL(10);
+        lsl.recorre();
+    }
 }

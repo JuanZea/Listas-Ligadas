@@ -5,26 +5,31 @@ package listasligadas;
  * @author JuanZea
  */
 public class NodoSimple {
-    private char dato;
+
+    private int dato;
     private NodoSimple liga;
-    
-    public NodoSimple(){
+
+    public NodoSimple() {
     }
-    public NodoSimple(char pDato) {
+
+    public NodoSimple(int pDato) {
         dato = pDato;
         liga = null;
     }
-    
-    public char retornaDato(){
+
+    public int retornaDato() {
         return dato;
     }
-    public NodoSimple retornaLiga(){
-        return  liga;
-    } 
-    public void asignaDato(char pDato){
+
+    public NodoSimple retornaLiga() {
+        return liga;
+    }
+
+    public void asignaDato(int pDato) {
         dato = pDato;
     }
-    public void asignaLiga(NodoSimple p){
-        liga = p;
+
+    public void asignaLiga(NodoSimple pLiga) {
+        liga = pLiga;
     }
 }
