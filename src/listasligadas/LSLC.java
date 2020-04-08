@@ -59,7 +59,10 @@ public class LSLC {
         }
         NodoSimple p, y;
         p = primero;
-        y = ultimo;
+        y = null;
+        if (primero.retornaDato() > d) {
+            return y;
+        }
         do {
             y = p;
             p = p.retornaLiga();
@@ -74,24 +77,29 @@ public class LSLC {
     }
 
     public void conectar(NodoSimple x, NodoSimple y) {
-        if (y == null) {
+        if (this.esVacio()) {
             primero = x;
             ultimo = x;
             x.asignaLiga(x);
             return;
         }
+        if (y == null) {
+            primero = x;
+            x.asignaLiga(ultimo.retornaLiga());
+            ultimo.asignaLiga(x);
+            return;
+        }
         x.asignaLiga(y.retornaLiga());
         y.asignaLiga(x);
         if (y == ultimo) {
-            if (x.retornaDato() < primero.retornaDato()) {
-                primero = x;
-            } else {
-                ultimo = x;
-            }
+            ultimo = x;
         }
     }
 
     public NodoSimple buscarDato(int d, NodoSimple y) {
+        if (this.esVacio()) {
+            return null;
+        }
         NodoSimple p;
         p = primero;
         y = ultimo;
@@ -102,6 +110,9 @@ public class LSLC {
             y = p;
             p = p.retornaLiga();
         } while (!finDeRecorrido(p) && p.retornaDato() != d);
+        if (p == primero) {
+            return null;
+        }
         return p;
     }
 
