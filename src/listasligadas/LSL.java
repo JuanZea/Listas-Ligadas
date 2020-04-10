@@ -24,7 +24,7 @@ public class LSL {
         return ultimo;
     }
 
-    public NodoSimple anterior(NodoSimple x) {
+    public NodoSimple anterior(NodoSimple x) { // Error si x no esta en la lista
         NodoSimple p, y;
         p = primerNodo();
         y = null;
@@ -74,8 +74,8 @@ public class LSL {
                 ultimo = x;
             }
         } else {
-            x.asignaLiga(primero);
-            if (primero == null) {
+            x.asignaLiga(primerNodo());
+            if (primerNodo() == null) {
                 ultimo = x;
             }
             primero = x;
@@ -84,7 +84,7 @@ public class LSL {
 
     public NodoSimple buscarDato(int d, NodoSimple y) {
         NodoSimple x;
-        x = primero;
+        x = primerNodo();
         y = anterior(x);
         while (!finDeRecorrido(x) && x.retornaDato() != d) {
             y = x;
@@ -101,14 +101,14 @@ public class LSL {
     }
 
     public void desconectar(NodoSimple x, NodoSimple y) {
-        if (x != primero) {
+        if (x != primerNodo()) {
             y.asignaLiga(x.retornaLiga());
             if (x == ultimo) {
                 ultimo = y;
             }
         } else {
-            primero = primero.retornaLiga();
-            if (primero == null) {
+            primero = primerNodo().retornaLiga();
+            if (primerNodo() == null) {
                 ultimo = null;
             }
         }

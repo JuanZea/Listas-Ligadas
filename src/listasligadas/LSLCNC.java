@@ -4,21 +4,26 @@ package listasligadas;
  *
  * @author JuanZea
  */
-public class LSLC {
+public class LSLCNC {
 
-    private NodoSimple primero;
-    private NodoSimple ultimo;
+    private NodoSimple primero, ultimo;
 
-    public LSLC() {
-        primero = ultimo = null;
+    public LSLCNC() {
+        primero = new NodoSimple(null);
+        primero.asignaLiga(null);
+        ultimo = primero;
     }
 
     public boolean esVacio() {
-        return primero == null;
+        return primero.retornaLiga() == null;
+    }
+
+    public NodoSimple nodoCabeza() {
+        return primero;
     }
 
     public NodoSimple primerNodo() {
-        return primero;
+        return primero.retornaLiga();
     }
 
     public NodoSimple ultimoNodo() {
@@ -28,7 +33,7 @@ public class LSLC {
     public NodoSimple anterior(NodoSimple x) { // Error si x no esta en la lista
         NodoSimple p, y;
         p = primerNodo();
-        y = ultimoNodo();
+        y = nodoCabeza();
         while (p != x) {
             y = p;
             p = p.retornaLiga();
@@ -37,36 +42,27 @@ public class LSLC {
     }
 
     public boolean finDeRecorrido(NodoSimple p) {
-        return p == primerNodo();
+        return p == null;
     }
 
     public void recorre() {
-        if (this.esVacio()) {
-            return;
-        }
         NodoSimple p;
         p = primerNodo();
-        do {
+        while (!finDeRecorrido(p)) {
             System.out.print(p.retornaDato() + "\t");
             p = p.retornaLiga();
-        } while (!finDeRecorrido(p));
+        }
         System.out.println();
     }
 
     public NodoSimple buscaDondeInsertar(int d) {
-        if (this.esVacio()) {
-            return null;
-        }
         NodoSimple p, y;
         p = primerNodo();
-        y = null;
-        if (primerNodo().retornaDato() > d) {
-            return y;
-        }
-        do {
+        y = anterior(p);
+        while (!finDeRecorrido(p) && p.retornaDato() < d) {
             y = p;
             p = p.retornaLiga();
-        } while (!finDeRecorrido(p) && p.retornaDato() < d);
+        }
         return y;
     }
 
@@ -77,16 +73,10 @@ public class LSLC {
     }
 
     public void conectar(NodoSimple x, NodoSimple y) {
-        if (this.esVacio()) {
-            primero = x;
+        if(esVacio()){
+            x.asignaLiga(null);
+            y.asignaLiga(x);
             ultimo = x;
-            x.asignaLiga(x);
-            return;
-        }
-        if (y == null) {
-            primero = x;
-            x.asignaLiga(ultimo.retornaLiga());
-            ultimo.asignaLiga(x);
             return;
         }
         x.asignaLiga(y.retornaLiga());
@@ -100,20 +90,14 @@ public class LSLC {
         if (this.esVacio()) {
             return null;
         }
-        NodoSimple p;
-        p = primerNodo();
-        y = ultimo;
-        if (primerNodo().retornaDato() == d) {
-            return p;
+        NodoSimple x;
+        x = primerNodo();
+        y = anterior(x);
+        while (!finDeRecorrido(x) && x.retornaDato() != d) {
+            y = x;
+            x = x.retornaLiga();
         }
-        do {
-            y = p;
-            p = p.retornaLiga();
-        } while (!finDeRecorrido(p) && p.retornaDato() != d);
-        if (p == primerNodo()) {
-            return null;
-        }
-        return p;
+        return x;
     }
 
     public void borrar(NodoSimple x, NodoSimple y) {
@@ -125,13 +109,11 @@ public class LSLC {
 
     public void desconectar(NodoSimple x, NodoSimple y) {
         y.asignaLiga(x.retornaLiga());
-        if (x == primerNodo()) {
-            primero = primerNodo().retornaLiga();
-            return;
-        }
         if (x == ultimo) {
             ultimo = y;
-            return;
+        }
+        if (x == primerNodo()) {
+            primero = x.retornaLiga();
         }
     }
 }

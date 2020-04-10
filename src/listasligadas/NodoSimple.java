@@ -6,13 +6,13 @@ package listasligadas;
  */
 public class NodoSimple {
 
-    private int dato;
+    private Integer dato;
     private NodoSimple liga;
 
     public NodoSimple() {
     }
 
-    public NodoSimple(int pDato) {
+    public NodoSimple(Integer pDato) {
         dato = pDato;
         liga = null;
     }
