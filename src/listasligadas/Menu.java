@@ -55,6 +55,7 @@ public class Menu {
         LSLC lslc = new LSLC();
         LSLCNC lslcnc = new LSLCNC();
         LDL ldl = new LDL();
+        LDLC ldlc = new LDLC();
         switch (variacion) {
             case "LSL":
                 lsl = construirLista(menu, aleatoria, ordenada, lsl, tamaño);
@@ -79,6 +80,12 @@ public class Menu {
                 System.out.println("Su " + traducirVariacion(variacion) + " se ha "
                         + "creado correctamente.");
                 ldl.recorre();
+                break;
+                case "LDLC":
+                ldlc = construirLista(menu, aleatoria, ordenada, ldlc, tamaño);
+                System.out.println("Su " + traducirVariacion(variacion) + " se ha "
+                        + "creado correctamente.");
+                ldlc.recorre();
                 break;
         }
     }
@@ -281,6 +288,56 @@ public class Menu {
             }
         }
         return ldl;
+    }
+    
+    public LDLC construirLista(Menu menu, Boolean aleatoria,
+            Boolean ordenada, LDLC ldlc, Integer tamaño){
+        NodoDoble y = null;
+        Integer dato;
+        if (aleatoria) {
+            Random rnd = new Random();
+            if (tamaño <= 100) {    //Contruir lista sin datos repetidos cuando el tamaño sea menor o igual a 100
+                for (int i = 0; i < tamaño; i++) {
+                    dato = rnd.nextInt(101);
+                    while (ldlc.buscarDato(dato, y) != null) {
+                        dato = rnd.nextInt(101);
+                    }
+                    if (ordenada) {
+                        y = ldlc.buscaDondeInsertar(dato);
+                    } else {
+                        y = ldlc.ultimoNodo();
+                    }
+                    ldlc.insertar(dato, y);
+                }
+            } else {    //Construir lista con datos que pueden ser repetidos entre 0 y 999 si el tamaño es mayor a 100
+                for (int i = 0; i < tamaño; i++) {
+                    dato = rnd.nextInt(1000);
+                    if (ordenada) {
+                        y = ldlc.buscaDondeInsertar(dato);
+                    } else {
+                        y = ldlc.ultimoNodo();
+                    }
+                    ldlc.insertar(dato, y);
+                }
+            }
+        } else {
+            System.out.println("Ingrese \"C\" para dejar de entrar datos.");
+            int i = 1;
+            while (true) {
+                dato = menu.pedirDato(i);
+                if (dato == null) {
+                    break;
+                }
+                if (ordenada) {
+                    y = ldlc.buscaDondeInsertar(dato);
+                } else {
+                    y = ldlc.ultimoNodo();
+                }
+                ldlc.insertar(dato, y);
+                i++;
+            }
+        }
+        return ldlc;
     }
 
     public Integer pedirDato(int i) {
