@@ -131,7 +131,6 @@ public class LSLC {
         }
         if (x == ultimo) {
             ultimo = y;
-            return;
         }
     }
 }

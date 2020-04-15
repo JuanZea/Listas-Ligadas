@@ -4,18 +4,19 @@ package listasligadas;
  *
  * @author JuanZea
  */
-public class NodoDoble{
+public class NodoDoble {
+
     private int dato;
     private NodoDoble ligaI, ligaD;
-    
-    public NodoDoble(){
+
+    public NodoDoble() {
     }
-    
-    public NodoDoble(int pDato){
+
+    public NodoDoble(int pDato) {
         ligaI = ligaD = null;
         dato = pDato;
     }
-    
+
     public int retornaDato() {
         return dato;
     }
@@ -23,7 +24,7 @@ public class NodoDoble{
     public NodoDoble retornaLigaI() {
         return ligaI;
     }
-    
+
     public NodoDoble retornaLigaD() {
         return ligaD;
     }
@@ -35,7 +36,7 @@ public class NodoDoble{
     public void asignaLigaI(NodoDoble pLigaI) {
         ligaI = pLigaI;
     }
-    
+
     public void asignaLigaD(NodoDoble pLigaD) {
         ligaD = pLigaD;
     }
