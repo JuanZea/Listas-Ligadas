@@ -54,6 +54,7 @@ public class Menu {
         LSL lsl = new LSL();
         LSLC lslc = new LSLC();
         LSLCNC lslcnc = new LSLCNC();
+        LDL ldl = new LDL();
         switch (variacion) {
             case "LSL":
                 lsl = construirLista(menu, aleatoria, ordenada, lsl, tamaño);
@@ -63,11 +64,21 @@ public class Menu {
                 break;
             case "LSLC":
                 lslc = construirLista(menu, aleatoria, ordenada, lslc, tamaño);
+                System.out.println("Su " + traducirVariacion(variacion) + " se ha "
+                        + "creado correctamente.");
                 lslc.recorre();
                 break;
             case "LSLCNC":
                 lslcnc = construirLista(menu, aleatoria, ordenada, lslcnc, tamaño);
+                System.out.println("Su " + traducirVariacion(variacion) + " se ha "
+                        + "creado correctamente.");
                 lslcnc.recorre();
+                break;
+            case "LDL":
+                ldl = construirLista(menu, aleatoria, ordenada, ldl, tamaño);
+                System.out.println("Su " + traducirVariacion(variacion) + " se ha "
+                        + "creado correctamente.");
+                ldl.recorre();
                 break;
         }
     }
@@ -220,6 +231,56 @@ public class Menu {
             }
         }
         return lslcnc;
+    }
+
+    public LDL construirLista(Menu menu, Boolean aleatoria,
+            Boolean ordenada, LDL ldl, Integer tamaño) {
+        NodoDoble y = null;
+        Integer dato;
+        if (aleatoria) {
+            Random rnd = new Random();
+            if (tamaño <= 100) {    //Contruir lista sin datos repetidos cuando el tamaño sea menor o igual a 100
+                for (int i = 0; i < tamaño; i++) {
+                    dato = rnd.nextInt(101);
+                    while (ldl.buscarDato(dato, y) != null) {
+                        dato = rnd.nextInt(101);
+                    }
+                    if (ordenada) {
+                        y = ldl.buscaDondeInsertar(dato);
+                    } else {
+                        y = ldl.ultimoNodo();
+                    }
+                    ldl.insertar(dato, y);
+                }
+            } else {    //Construir lista con datos que pueden ser repetidos entre 0 y 999 si el tamaño es mayor a 100
+                for (int i = 0; i < tamaño; i++) {
+                    dato = rnd.nextInt(1000);
+                    if (ordenada) {
+                        y = ldl.buscaDondeInsertar(dato);
+                    } else {
+                        y = ldl.ultimoNodo();
+                    }
+                    ldl.insertar(dato, y);
+                }
+            }
+        } else {
+            System.out.println("Ingrese \"C\" para dejar de entrar datos.");
+            int i = 1;
+            while (true) {
+                dato = menu.pedirDato(i);
+                if (dato == null) {
+                    break;
+                }
+                if (ordenada) {
+                    y = ldl.buscaDondeInsertar(dato);
+                } else {
+                    y = ldl.ultimoNodo();
+                }
+                ldl.insertar(dato, y);
+                i++;
+            }
+        }
+        return ldl;
     }
 
     public Integer pedirDato(int i) {
