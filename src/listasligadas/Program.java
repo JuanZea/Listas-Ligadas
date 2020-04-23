@@ -1,10 +1,5 @@
 package listasligadas;
 
-import java.awt.SystemColor;
-import java.util.Random;
-import java.util.Scanner;
-import listasligadas.LSL;
-
 /**
  *
  * @author JuanZea
@@ -19,3 +14,4 @@ public class Program {
         }
     }
 }
+// Falta reparar errores con LDLCNC y LDLCCNC

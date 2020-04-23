@@ -6,13 +6,13 @@ package listasligadas;
  */
 public class NodoDoble {
 
-    private int dato;
+    private Integer dato;
     private NodoDoble ligaI, ligaD;
 
     public NodoDoble() {
     }
 
-    public NodoDoble(int pDato) {
+    public NodoDoble(Integer pDato) {
         ligaI = ligaD = null;
         dato = pDato;
     }
